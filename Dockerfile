@@ -7,8 +7,8 @@ RUN echo Copied keys
 
 RUN go get -u -v github.com/vladimir-voinea/location-report-app/server 
 WORKDIR /go/src/github.com/vladimir-voinea/location-report-app/server 
-RUN go build
+RUN go install
 EXPOSE 50051
 
-ENTRYPOINT [ "server" ]
+ENTRYPOINT [ "/go/bin/server" ]
 CMD ["-cert_file=/etc/ssl/certs/cert.pem", "-key_file=/etc/ssl/certs/key.pem"]

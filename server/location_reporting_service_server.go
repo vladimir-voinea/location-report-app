@@ -74,8 +74,10 @@ func main() {
 		log.Fatalf("Failed to generate credentials %v", err)
 		os.Exit(1)
 	}
-	opts = []grpc.ServerOption{grpc.Creds(creds)}
 
+	fmt.Println("Got credentials")
+
+	opts = []grpc.ServerOption{grpc.Creds(creds)}
 	s := grpc.NewServer(opts...)
 	pb.RegisterLocationReportingServiceServer(s, &server{})
 	if err := s.Serve(lis); err != nil {
