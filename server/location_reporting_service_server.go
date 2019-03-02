@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"errors"
 	"flag"
 	"fmt"
 	"log"
@@ -41,8 +42,13 @@ func GetCredentials() (cert string, key string, err error) {
 
 	flag.Parse()
 
-	fmt.Println("Cert file: " + cert_file)
-	fmt.Println("Key file: " + key_file)
+	if cert_file == "" {
+		return "", "", errors.New("Certificate file path is empty")
+	}
+
+	if key_file == "" {
+		return "", "", errors.New("Key file path is empty")
+	}
 
 	return cert_file, key_file, nil
 }
@@ -50,6 +56,7 @@ func GetCredentials() (cert string, key string, err error) {
 func main() {
 	cert_file, key_file, err := GetCredentials()
 	if err != nil {
+		fmt.Fprintf(os.Stderr, err.Error()+"\n")
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
@@ -57,19 +64,21 @@ func main() {
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
+		os.Exit(1)
 	}
 
 	var opts []grpc.ServerOption
 	creds, err := credentials.NewServerTLSFromFile(cert_file, key_file)
 	if err != nil {
 		log.Fatalf("Failed to generate credentials %v", err)
+		os.Exit(1)
 	}
 	opts = []grpc.ServerOption{grpc.Creds(creds)}
 
 	s := grpc.NewServer(opts...)
 	pb.RegisterLocationReportingServiceServer(s, &server{})
 	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		log.Fatalf("Failed to serve: %v", err)
+		os.Exit(1)
 	}
-
 }
