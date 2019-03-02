@@ -1,0 +1,22 @@
+syntax='proto3';
+
+package location_reporting_service;
+
+message Location {
+    double latitude = 1;
+    double longitude = 2;
+    double bearing = 3;
+    int64 timestamp = 4;
+}
+
+message PushLocationsRequest {
+    repeated Location locations = 1;
+}
+
+message PushLocationsResponse {
+    bool success = 1;
+}
+
+service LocationReportingService {
+    rpc PushLocations(PushLocationsRequest) returns (PushLocationsResponse) {}
+}
