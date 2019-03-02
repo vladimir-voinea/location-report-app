@@ -81,4 +81,6 @@ func main() {
 		log.Fatalf("Failed to serve: %v", err)
 		os.Exit(1)
 	}
+
+	fmt.Printf("Listening!")
 }
