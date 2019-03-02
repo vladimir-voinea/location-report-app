@@ -1,3 +1,7 @@
+*.crt
+*.pem
+*.key
+*.csr
 *.DS_Store
 
 # Built application files
