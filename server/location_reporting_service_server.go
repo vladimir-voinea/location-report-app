@@ -66,6 +66,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 		os.Exit(1)
 	}
+	os.Exit(1)
 
 	var opts []grpc.ServerOption
 	creds, err := credentials.NewServerTLSFromFile(cert_file, key_file)
