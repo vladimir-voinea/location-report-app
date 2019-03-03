@@ -66,6 +66,7 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 		os.Exit(1)
 	}
+	defer lis.Close()
 	fmt.Println("Almost ready")
 
 	var opts []grpc.ServerOption
@@ -75,7 +76,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("Got credentials")
+	fmt.Println("Got credentials: " + creds.Info().SecurityProtocol)
 
 	opts = []grpc.ServerOption{grpc.Creds(creds)}
 	s := grpc.NewServer(opts...)
