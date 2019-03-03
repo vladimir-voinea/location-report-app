@@ -1,5 +1,6 @@
 package main
 
+/*p
 import (
 	"context"
 	"crypto/tls"
@@ -40,10 +41,7 @@ func main() {
 		Bearing:   342.1,
 		Timestamp: 22222}}})
 	if err != nil {
-		fmt.Printf("could not call. %s", err)
-		recover()
-	} else {
-		fmt.Println("Done successfully")
+		fmt.Printf("Could not call. %s", err)
 	}
 
 	if response != nil {
@@ -54,3 +52,4 @@ func main() {
 		}
 	}
 }
+*/
